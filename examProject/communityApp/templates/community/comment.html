@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+电影评论
+{% endblock %}
+
+{% block content %}
+<!-- 广告横幅 -->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive model-img" src="{% static 'img/community.jpg' %}" 
+                     alt="电影评论">
+    </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="container">
+    <div class="row row-3">
+        <!-- 侧边导航栏 -->
+        <div class="col-md-3">
+            <div class="model-title">
+                社区互动
+            </div>
+            <div class="model-list">
+                <ul class="list-group">
+                    <li class="list-group-item active" id="comment">
+                        <a href="{% url 'communityApp:comment' %}">电影评论</a>
+                    </li>
+                    <li class="list-group-item" id="share">
+                        <a href="{% url 'communityApp:share' %}">用户分享</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 说明文字和图片 -->
+        <div class="col-md-9">
+            <div class="model-details-title">
+                电影评论
+            </div>
+            <div class="model-details">
+                <div class="row">
+                    <img class="img-responsive" src="{% static 'img/comment.jpg' %}">
+                </div>
+                <p>
+                    电影评论社区是影迷们交流观影感受的平台。在这里，您可以查看其他用户对电影的评论和评分，也可以发表自己的看法。每一条评论都是宝贵的观影参考，帮助大家更好地选择电影。
+                </p>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        {% if comments %}
+                        <div class="list-group">
+                            {% for comment in comments %}
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <!-- 修复：添加电影海报 -->
+                                        {% if comment.movie.poster %}
+                                            <img src="{{ comment.movie.poster.url }}" 
+                                                 alt="{{ comment.movie.title }}"
+                                                 style="width: 100%; height: 150px; object-fit: cover;">
+                                        {% else %}
+                                            <img src="https://via.placeholder.com/150x200/ffc107/333?text={{ comment.movie.title }}" 
+                                                 alt="{{ comment.movie.title }}"
+                                                 style="width: 100%; height: 150px; object-fit: cover;">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-9">
+                                        <h5 class="list-group-item-heading">
+                                            <strong>{{ comment.movie.title }}</strong>
+                                            <span class="pull-right">评分：⭐ {{ comment.rating }}</span>
+                                        </h5>
+                                        <p class="list-group-item-text">
+                                            {{ comment.content|truncatechars:100 }}
+                                        </p>
+                                        <small>
+                                            评论者：{{ comment.user.username }} | 
+                                            时间：{{ comment.created_at|date:"Y-m-d H:i" }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="alert alert-info">
+                            <p>暂无评论数据。</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

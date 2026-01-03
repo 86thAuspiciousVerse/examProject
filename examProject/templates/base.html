@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>电影推荐网站|{% block title %}{% endblock %} </title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <style>
+        .movie-card { height: 380px; margin-bottom: 20px; }
+        .movie-poster { height: 200px; object-fit: cover; }
+        .web-footer { background-color: #f8f9fa; padding: 30px 0; margin-top: 40px; }
+        .line { height: 5px; background: linear-gradient(to right, #e50914, #f5f5f1, #e50914); margin-bottom: 20px; }
+    </style>
+</head>
+
+<body>
+    <!-- 修改logo所在的div为col-md-12（占整行） -->
+    <div class="container top">
+        <div class="row">
+            <!-- 步骤1: logo改为整行 -->
+            <div class="col-md-12">
+                <a href="{% url 'home' %}">
+                    <!-- 步骤2: 给img加自定义class，方便单独控制样式 -->
+                    <img class="img-responsive logo-img" src="{% static 'img/logo.jpg' %}" alt="电影推荐网站">
+                </a>
+            </div>
+
+            <!-- 步骤3: 电话、邮箱合并为一行，放在logo下方（确保居中） -->
+            <div class="col-md-12 contact-info-wrapper">
+                <a class="phone ant" href="tel:40011110000">
+                    <span class="glyphicon glyphicon-phone"></span>电话: 400 1111 0000
+                </a>
+                <a class="mail ant" href="mailto:movie@recommend.com">
+                    <span class="glyphicon glyphicon-envelope"></span>邮箱: movie@recommend.com
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 导航条 -->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example" aria-expanded="false">
+                    <span class="sr-only">导航栏</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example">
+                <ul class="nav navbar-nav" style="width:100%;">
+                    <li class="nav-top">
+                        <a href="{% url 'home' %}">首页</a>
+                    </li>
+                    
+                    <li class="dropdown nav-top">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            电影库</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'moviesApp:category' %}">电影分类</a></li>
+                            <li><a href="{% url 'moviesApp:search' %}">电影搜索</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown nav-top">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                             推荐中心</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'recommendationsApp:score' %}">评分推荐</a></li>
+                            <li><a href="{% url 'recommendationsApp:type' %}">类型推荐</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown nav-top">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            社区互动</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'communityApp:comment' %}">电影评论</a></li>
+                            <li><a href="{% url 'communityApp:share' %}">用户分享</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown nav-top">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            用户中心</a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'userApp:data' %}">个人资料</a></li>
+                                <li><a href="{% url 'userApp:collect' %}">我的收藏</a></li>
+                                <li><a href="{% url 'userApp:logout' %}">退出登录</a></li>
+                            {% else %}
+                                <li><a href="{% url 'userApp:register' %}">用户注册</a></li>
+                                <li><a href="{% url 'userApp:login' %}">用户登录</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown nav-top">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            关于我们</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'aboutApp:introduction' %}">网站介绍</a></li>
+                            <li><a href="{% url 'aboutApp:help' %}">帮助中心</a></li>
+                        </ul>
+                    </li>
+                    
+                    {% if user.is_authenticated %}
+                    <li class="pull-right" style="margin-top: 15px; margin-right: 15px;">
+                        <span class="text-muted">欢迎，{{ user.username }}</span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 分割线 -->
+    <div class="line"></div>
+    
+    <!-- 主要内容 -->
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+    <!-- 页脚 -->
+    <div class="container web-footer">
+        <div class="row" id="map-footer">
+            <div class="col-md-2">
+                <dl>
+                    <dt>电影库</dt>
+                    <dd><a href="{% url 'moviesApp:category' %}">电影分类</a></dd>
+                    <dd><a href="{% url 'moviesApp:search' %}">电影搜索</a></dd>
+                </dl>
+            </div>
+            <div class="col-md-2">
+                <dl>
+                    <dt>推荐中心</dt>
+                    <dd><a href="{% url 'recommendationsApp:score' %}">评分推荐</a></dd>
+                    <dd><a href="{% url 'recommendationsApp:type' %}">类型推荐</a></dd>
+                </dl>
+            </div>
+            <div class="col-md-2">
+                <dl>
+                    <dt>社区互动</dt>
+                    <dd><a href="{% url 'communityApp:comment' %}">电影评论</a></dd>
+                    <dd><a href="{% url 'communityApp:share' %}">用户分享</a></dd>
+                </dl>
+            </div>
+            <div class="col-md-2">
+                <dl>
+                    <dt>用户中心</dt>
+                    {% if user.is_authenticated %}
+                        <dd><a href="{% url 'userApp:data' %}">个人资料</a></dd>
+                        <dd><a href="{% url 'userApp:collect' %}">我的收藏</a></dd>
+                    {% else %}
+                        <dd><a href="{% url 'userApp:register' %}">用户注册</a></dd>
+                        <dd><a href="{% url 'userApp:login' %}">用户登录</a></dd>
+                    {% endif %}
+                </dl>
+            </div>
+            <div class="col-md-2">
+                <dl>
+                    <dt>关于我们</dt>
+                    <dd><a href="{% url 'aboutApp:introduction' %}">网站介绍</a></dd>
+                    <dd><a href="{% url 'aboutApp:help' %}">帮助中心</a></dd>
+                </dl>
+            </div>
+            <div class="col-md-2" id="wx">
+                <p>扫描二维码，关注我们</p>
+                <img class="qrimg" src="{% static 'img/qr.png' %}" alt="微信二维码" style="width: 100px;">
+                <p>客服热线：<b style="font-size:16px">400 1111 0000</b></p>
+            </div>
+        </div>
+        <div class="row text-center" style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+            <p>© 2023 电影推荐网站 - 期末考核项目 | Django + Bootstrap + SQLite</p>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            // 下拉菜单悬停效果
+            $(".dropdown").mouseover(function () {
+                $(this).addClass("open");
+            });
+            $(".dropdown").mouseleave(function () {
+                $(this).removeClass("open");
+            });
+            // 当前页面高亮
+            var currentUrl = window.location.pathname;
+            $('.nav li a').each(function() {
+                var linkUrl = $(this).attr('href');
+                if (currentUrl.indexOf(linkUrl) === 0 || 
+                    (linkUrl !== '/' && currentUrl.indexOf(linkUrl) > 0)) {
+                    $(this).parents('li').addClass('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

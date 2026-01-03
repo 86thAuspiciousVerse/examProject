@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+用户分享
+{% endblock %}
+
+{% block content %}
+<!-- 广告横幅 -->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive model-img" src="{% static 'img/community.jpg' %}" 
+                 alt="用户分享">
+    </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="container">
+    <div class="row row-3">
+        <!-- 侧边导航栏 -->
+        <div class="col-md-3">
+            <div class="model-title">
+                社区互动
+            </div>
+            <div class="model-list">
+                <ul class="list-group">
+                    <li class="list-group-item" id="comment">
+                        <a href="{% url 'communityApp:comment' %}">电影评论</a>
+                    </li>
+                    <li class="list-group-item active" id="share">
+                        <a href="{% url 'communityApp:share' %}">用户分享</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 说明文字和图片 -->
+        <div class="col-md-9">
+            <div class="model-details-title">
+                用户分享
+            </div>
+            <div class="model-details">
+                <div class="row">
+                    <img class="img-responsive" src="{% static 'img/share.jpg' %}">
+                </div>
+                <p>
+                    用户分享是电影爱好者们交流观影故事、推荐冷门佳片、分享观影体验的平台。在这里，您可以读到其他影迷的真实观影感受，发现那些可能被忽略的好电影。每个分享都是独特的观影体验，让我们共同构建这个充满热情的电影社区。
+                </p>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        {% if shares %}
+                        <div class="list-group">
+                            {% for share in shares %}
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <!-- 修复：添加电影海报 -->
+                                        {% if share.movie.poster %}
+                                            <img src="{{ share.movie.poster.url }}" 
+                                                 alt="{{ share.movie.title }}"
+                                                 style="width: 100%; height: 150px; object-fit: cover;">
+                                        {% else %}
+                                            <img src="https://via.placeholder.com/150x200/ffc107/333?text={{ share.movie.title }}" 
+                                                 alt="{{ share.movie.title }}"
+                                                 style="width: 100%; height: 150px; object-fit: cover;">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-9">
+                                        <h5 class="list-group-item-heading">
+                                            <strong>{{ share.movie.title }}</strong>
+                                            <span class="pull-right">分享者：{{ share.user.username }}</span>
+                                        </h5>
+                                        <p class="list-group-item-text">
+                                            {{ share.share_text|truncatechars:150 }}
+                                        </p>
+                                        <small>
+                                            分享时间：{{ share.created_at|date:"Y-m-d H:i" }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="alert alert-info">
+                            <p>暂无分享数据。</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+电影推荐首页
+{% endblock %}
+
+{% block content %}
+<!-- 广告横幅 -->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive model-img" src="{% static 'img/home.jpg' %}" alt="电影推荐网站-发现好电影">
+    </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="container">
+    <!-- 最新电影 -->
+    <div class="row row-3">
+        <div class="col-md-12">
+            <div class="model-details-title">
+                最新电影
+            </div>
+        </div>
+        {% for movie in latest_movies %}
+        <div class="col-md-3 col-sm-6">
+            <div class="movie-card">
+                <!-- 修复：使用动态海报URL -->
+                {% if movie.poster %}
+                    <img src="{{ movie.poster.url }}" 
+                         class="img-responsive movie-poster" 
+                         alt="{{ movie.title }}"
+                         style="width: 100%; height: 200px; object-fit: cover;">
+                {% else %}
+                    <img src="https://via.placeholder.com/300x200/ffc107/333?text={{ movie.title }}" 
+                         class="img-responsive movie-poster" 
+                         alt="{{ movie.title }}"
+                         style="width: 100%; height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body" style="padding: 15px;">
+                    <h5 class="card-title" style="font-size: 16px; margin-bottom: 10px;">{{ movie.title }}</h5>
+                    <p class="card-text text-muted" style="font-size: 14px; margin-bottom: 5px;">{{ movie.category.name }}</p>
+                    <p class="card-text" style="font-size: 14px;">
+                        <small>评分: ⭐ {{ movie.rating }}</small>
+                    </p>
+                    <a href="{% url 'moviesApp:details' movie.id %}" class="btn btn-primary btn-sm">查看详情</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- 高评分电影 -->
+    <div class="row row-3">
+        <div class="col-md-12">
+            <div class="model-details-title">
+                高分推荐
+            </div>
+        </div>
+        {% for movie in top_rated %}
+        <div class="col-md-3 col-sm-6">
+            <div class="movie-card">
+                <!-- 修复：使用动态海报URL -->
+                {% if movie.poster %}
+                    <img src="{{ movie.poster.url }}" 
+                         class="img-responsive movie-poster" 
+                         alt="{{ movie.title }}"
+                         style="width: 100%; height: 200px; object-fit: cover;">
+                {% else %}
+                    <img src="https://via.placeholder.com/300x200/ffc107/333?text={{ movie.title }}" 
+                         class="img-responsive movie-poster" 
+                         alt="{{ movie.title }}"
+                         style="width: 100%; height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body" style="padding: 15px;">
+                    <h5 class="card-title" style="font-size: 16px; margin-bottom: 10px;">{{ movie.title }}</h5>
+                    <p class="card-text text-muted" style="font-size: 14px; margin-bottom: 5px;">{{ movie.category.name }}</p>
+                    <p class="card-text" style="font-size: 14px;">
+                        <small>评分: ⭐ {{ movie.rating }}</small>
+                    </p>
+                    <a href="{% url 'moviesApp:details' movie.id %}" class="btn btn-warning btn-sm">查看详情</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

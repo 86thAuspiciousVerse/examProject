@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ movie.title }} - 电影详情
+{% endblock %}
+
+{% block content %}
+<!-- 广告横幅 -->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive model-img" src="{% static 'img/movies1.jpg' %}" 
+                 alt="{{ movie.title }}横幅">
+    </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="container">
+    <div class="row row-3">
+        <!-- 侧边导航栏 -->
+        <div class="col-md-3">
+            <div class="model-title">
+                电影库
+            </div>
+            <div class="model-list">
+                <ul class="list-group">
+                    <li class="list-group-item" id="movie_home">
+                        <a href="{% url 'moviesApp:movie_home' %}">电影库首页</a>
+                    </li>
+                    <li class="list-group-item" id="category">
+                        <a href="{% url 'moviesApp:category' %}">电影分类</a>
+                    </li>
+                    <li class="list-group-item" id="search">
+                        <a href="{% url 'moviesApp:search' %}">电影搜索</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 说明文字和图片 -->
+        <div class="col-md-9">
+            <div class="model-details-title">
+                {{ movie.title }}
+            </div>
+            <div class="model-details">
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- 修复：使用动态海报URL -->
+                        {% if movie.poster %}
+                            <img src="{{ movie.poster.url }}" 
+                                 class="img-responsive" 
+                                 alt="{{ movie.title }}" 
+                                 style="border: 1px solid #ddd; padding: 5px; max-height: 400px; width: 100%; object-fit: cover;">
+                        {% else %}
+                            <!-- 没有海报时使用占位图片 -->
+                            <img src="https://via.placeholder.com/300x400/6f42c1/ffffff?text={{ movie.title }}" 
+                                 class="img-responsive" 
+                                 alt="{{ movie.title }}" 
+                                 style="border: 1px solid #ddd; padding: 5px;">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th style="width: 30%">电影名称</th>
+                                <td>{{ movie.title }}</td>
+                            </tr>
+                            <tr>
+                                <th>分类</th>
+                                <td>{{ movie.category.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>导演</th>
+                                <td>{{ movie.director }}</td>
+                            </tr>
+                            <tr>
+                                <th>主演</th>
+                                <td>{{ movie.actors }}</td>
+                            </tr>
+                            <tr>
+                                <th>上映日期</th>
+                                <td>{{ movie.release_date }}</td>
+                            </tr>
+                            <tr>
+                                <th>时长</th>
+                                <td>{{ movie.duration }}分钟</td>
+                            </tr>
+                            <tr>
+                                <th>评分</th>
+                                <td>⭐ {{ movie.rating }}</td>
+                            </tr>
+                        </table>
+                        
+                        <h4>电影简介</h4>
+                        <p>{{ movie.description }}</p>
+                        
+                        <div class="btn-group">
+                            <a href="{% url 'moviesApp:category' %}" class="btn btn-default">返回分类</a>
+                            <a href="{% url 'moviesApp:search' %}" class="btn btn-default">继续搜索</a>
+                            {% if user.is_authenticated %}
+                            <button class="btn btn-primary">收藏电影</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

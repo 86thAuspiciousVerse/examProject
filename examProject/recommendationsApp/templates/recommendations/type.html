@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+类型推荐
+{% endblock %}
+
+{% block content %}
+<!-- 广告横幅 -->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive model-img" src="{% static 'img/recommendation.jpg' %}" 
+                 alt="类型推荐横幅">
+    </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="container">
+    <div class="row row-3">
+        <!-- 侧边导航栏 -->
+        <div class="col-md-3">
+            <div class="model-title">
+                推荐中心
+            </div>
+            <div class="model-list">
+                <ul class="list-group">
+                    <li class="list-group-item" id="score">
+                        <a href="{% url 'recommendationsApp:score' %}">评分推荐</a>
+                    </li>
+                    <li class="list-group-item active" id="type">
+                        <a href="{% url 'recommendationsApp:type' %}">类型推荐</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 说明文字和图片 -->
+        <div class="col-md-9">
+            <div class="model-details-title">
+                基于类型的电影推荐
+            </div>
+            <div class="model-details">
+                <div class="row">
+                    <img class="img-responsive" src="{% static 'img/type.jpg' %}">
+                </div>
+                <p>
+                    类型推荐功能根据您的观影历史和偏好，智能推荐您可能感兴趣的电影。我们的推荐算法会分析您观看过的电影类型、评分记录和浏览行为，为您量身定制推荐列表。无论您喜欢动作大片、浪漫爱情片、悬疑烧脑片还是轻松喜剧，我们都能为您找到合适的电影。
+                </p>
+                
+                <h4>为您推荐的电影</h4>
+                <div class="row">
+                    {% for movie in movies %}
+                    <div class="col-md-4">
+                        <div class="thumbnail" style="border: 1px solid #ddd; padding: 10px; margin-bottom: 20px;">
+                            <div class="caption">
+                                <h5>{{ movie.title }}</h5>
+                                
+                                <!-- 修复：添加海报显示 -->
+                                {% if movie.poster %}
+                                    <img src="{{ movie.poster.url }}" 
+                                         alt="{{ movie.title }}"
+                                         style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 10px;">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/300x200/ffc107/333?text={{ movie.title }}" 
+                                         alt="{{ movie.title }}"
+                                         style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 10px;">
+                                {% endif %}
+                                
+                                <p>分类：{{ movie.category.name }}</p>
+                                <p>评分：⭐ {{ movie.rating }}</p>
+                                <p>导演：{{ movie.director }}</p>
+                                <p>
+                                    <a href="{% url 'moviesApp:details' movie.id %}" class="btn btn-primary btn-sm">查看详情</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-md-12">
+                        <div class="alert alert-info">暂无电影数据</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

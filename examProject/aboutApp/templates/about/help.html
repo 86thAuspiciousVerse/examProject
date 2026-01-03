@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+帮助中心
+{% endblock %}
+
+{% block content %}
+<!-- 广告横幅 -->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive model-img" src="{% static 'img/about.jpg' %}" 
+                 alt="关于我们">
+    </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="container">
+    <div class="row row-3">
+        <!-- 侧边导航栏 -->
+        <div class="col-md-3">
+            <div class="model-title">
+                关于我们
+            </div>
+            <div class="model-list">
+                <ul class="list-group">
+                    <li class="list-group-item" id="introduction">
+                        <a href="{% url 'aboutApp:introduction' %}">网站介绍</a>
+                    </li>
+                    <li class="list-group-item active" id="help">
+                        <a href="{% url 'aboutApp:help' %}">帮助中心</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 说明文字和图片 -->
+        <div class="col-md-9">
+            <div class="model-details-title">
+                帮助中心
+            </div>
+            <div class="model-details">
+                <div class="row">
+                    <img class="img-responsive" src="{% static 'img/help.jpg' %}">
+                </div>
+                
+                <h4>常见问题</h4>
+                
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                    如何注册账号？
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <p>点击导航栏的"用户中心"，选择"用户注册"，填写用户名和密码即可注册。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                    如何搜索电影？
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>点击导航栏的"电影库"，选择"电影搜索"，在搜索框中输入电影名称、导演或演员名称即可。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                    如何收藏电影？
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>首先需要登录账号，然后在电影详情页面点击"收藏电影"按钮即可。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                    如何发表评论？
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>首先需要登录账号，然后在电影详情页面找到评论区域，输入评论内容并提交即可。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                                    推荐算法是如何工作的？
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse5" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>我们的推荐算法基于用户的观影历史、评分记录和浏览行为，结合电影的分类、评分和热门程度，为您提供个性化的电影推荐。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4>联系我们</h4>
+                <p>如果您在使用过程中遇到任何问题，可以通过以下方式联系我们：</p>
+                <ul>
+                    <li>客服电话：400 1111 0000</li>
+                    <li>客服邮箱：movie@recommend.com</li>
+                    <li>服务时间：周一至周五 9:00-18:00</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

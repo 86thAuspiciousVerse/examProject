@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+网站介绍
+{% endblock %}
+
+{% block content %}
+<!-- 广告横幅 -->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive model-img" src="{% static 'img/about.jpg' %}" 
+                 alt="关于我们">
+    </div>
+</div>
+<!-- 主体内容 -->
+<div class="container">
+    <div class="row row-3">
+        <!-- 侧边导航栏 -->
+        <div class="col-md-3">
+            <div class="model-title">
+                关于我们
+            </div>
+            <div class="model-list">
+                <ul class="list-group">
+                    <li class="list-group-item active" id="introduction">
+                        <a href="{% url 'aboutApp:introduction' %}">网站介绍</a>
+                    </li>
+                    <li class="list-group-item" id="help">
+                        <a href="{% url 'aboutApp:help' %}">帮助中心</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 说明文字和图片 -->
+        <div class="col-md-9">
+            <div class="model-details-title">
+                网站介绍
+            </div>
+             <div class="model-details">
+                <div class="row">
+                    <img class="img-responsive" src="{% static 'img/introduction.jpg' %}">
+                </div>
+                <p>
+                    这是一个智能化的电影推荐平台，我们致力于帮助影迷在海量影片中找到真正适合自己的好电影。通过分析您的观影偏好、评分记录和浏览行为，我们的推荐算法能够精准预测您可能喜欢的影片，无论是小众文艺佳作还是热门商业大片。网站汇集了来自真实用户的深度影评和分项评分，涵盖剧情、演技、视听效果等多个维度，为您提供客观的参考。同时，我们打造了一个活跃的影迷社区，您可以在这里分享观后感、创建个人片单、参与话题讨论，与同好交流心得。平台拥有丰富的电影资料库，每部影片都提供详尽的介绍、预告片、演职员信息和幕后故事。我们的使命是让电影发现变得更简单、更有趣，让每一次观影都成为美好的体验。无论您是资深影迷还是偶尔观影的休闲观众，这里都是您探索电影世界的理想起点。
+                </p>
+                
+                <h4>我们的特色功能</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="thumbnail text-center">
+                            <div class="caption">
+                                <h5>智能推荐</h5>
+                                <p>基于您的观影历史和偏好，提供个性化电影推荐</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail text-center">
+                            <div class="caption">
+                                <h5>海量片库</h5>
+                                <p>涵盖各种类型的电影，从经典老片到最新大片</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail text-center">
+                            <div class="caption">
+                                <h5>社区互动</h5>
+                                <p>与影迷交流观影感受，发现更多好电影</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4>技术架构</h4>
+                <p>我们的网站采用先进的技术架构，确保用户获得流畅的体验：</p>
+                <ul>
+                    <li><strong>前端技术</strong>: 使用Bootstrap框架实现响应式设计，确保在各种设备上都能良好显示</li>
+                    <li><strong>后端框架</strong>: 基于Django开发，提供稳定的服务支持</li>
+                    <li><strong>数据库</strong>: 使用SQLite数据库存储电影信息和用户数据</li>
+                    <li><strong>推荐算法</strong>: 结合协同过滤和内容推荐算法，提供精准的电影推荐</li>
+                    <li><strong>用户体验</strong>: 简洁直观的界面设计，让用户轻松找到所需功能</li>
+                </ul>
+                
+                <h4>发展愿景</h4>
+                <p>
+                    我们相信，每个人都有自己独特的电影品味。我们的目标是不断优化推荐算法，让每个人都能在这个平台上发现真正打动自己的电影。未来，我们计划引入更多创新功能，如观影打卡、电影挑战赛、虚拟观影派对等，让电影观看不仅仅是单向的娱乐，更是社交和分享的体验。
+                </p>
+                
+                <div class="alert alert-info">
+                    <p><strong>温馨提示：</strong>本网站为大学期末考核项目，主要用于展示Django Web开发技术，所有电影数据均为测试数据。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

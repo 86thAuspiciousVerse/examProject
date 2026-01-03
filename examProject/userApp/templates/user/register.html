@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+用户注册
+{% endblock %}
+
+{% block content %}
+<!-- 广告横幅 -->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive model-img" src="{% static 'img/user.jpg' %}" 
+                 alt="用户中心">
+    </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="container">
+    <div class="row row-3">
+        <!-- 侧边导航栏 -->
+        <div class="col-md-3">
+            <div class="model-title">
+                用户中心
+            </div>
+            <div class="model-list">
+                <ul class="list-group">
+                    <li class="list-group-item" id="register">
+                        <a href="{% url 'userApp:register' %}">用户注册</a>
+                    </li>
+                    <li class="list-group-item" id="login">
+                        <a href="{% url 'userApp:login' %}">用户登录</a>
+                    </li>
+                    <li class="list-group-item" id="data">
+                        <a href="{% url 'userApp:data' %}">个人资料</a>
+                    </li>
+                    <li class="list-group-item" id="collect">
+                        <a href="{% url 'userApp:collect' %}">我的收藏</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 说明文字和图片 -->
+        <div class="col-md-9">
+            <div class="model-details-title">
+                用户注册
+            </div>
+            <div class="model-details">
+                <div class="row">
+                    <img class="img-responsive" src="{% static 'img/register.jpg' %}">
+                </div>
+                <p>
+                    欢迎注册电影推荐网站！注册后您可以享受更多功能，包括收藏喜欢的电影、发表评论、参与社区讨论等。请填写以下信息完成注册。
+                </p>
+                
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    
+                                    {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <div class="form-group">
+                                        <label for="id_username">用户名</label>
+                                        <input type="text" class="form-control" id="id_username" name="username" required>
+                                        <small class="form-text text-muted">必填。150个字符或者更少。包含字母，数字和仅有的@/./+/-/_符号。</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="id_password1">密码</label>
+                                        <input type="password" class="form-control" id="id_password1" name="password1" required>
+                                        <small class="form-text text-muted">
+                                            你的密码不能与其他个人信息太相似。<br>
+                                            你的密码必须包含至少8个字符。<br>
+                                            你的密码不能是大家都爱用的常见密码。<br>
+                                            你的密码不能全部为数字。
+                                        </small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="id_password2">密码确认</label>
+                                        <input type="password" class="form-control" id="id_password2" name="password2" required>
+                                        <small class="form-text text-muted">为了校验，请输入与上面相同的密码。</small>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">注册</button>
+                                    <a href="{% url 'userApp:login' %}" class="btn btn-link">已有账号？去登录</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

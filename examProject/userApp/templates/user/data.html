@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+个人资料
+{% endblock %}
+
+{% block content %}
+<!-- 广告横幅 -->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive model-img" src="{% static 'img/user.jpg' %}" 
+                 alt="用户中心">
+    </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="container">
+    <div class="row row-3">
+        <!-- 侧边导航栏 -->
+        <div class="col-md-3">
+            <div class="model-title">
+                用户中心
+            </div>
+            <div class="model-list">
+                <ul class="list-group">
+                    <li class="list-group-item" id="register">
+                        <a href="{% url 'userApp:register' %}">用户注册</a>
+                    </li>
+                    <li class="list-group-item" id="login">
+                        <a href="{% url 'userApp:login' %}">用户登录</a>
+                    </li>
+                    <li class="list-group-item active" id="data">
+                        <a href="{% url 'userApp:data' %}">个人资料</a>
+                    </li>
+                    <li class="list-group-item" id="collect">
+                        <a href="{% url 'userApp:collect' %}">我的收藏</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 说明文字和图片 -->
+        <div class="col-md-9">
+            <div class="model-details-title">
+                个人资料
+            </div>
+            <div class="model-details">
+                <div class="row">
+                    <img class="img-responsive" src="{% static 'img/data.jpg' %}">
+                </div>
+                <p>
+                    这是您的个人资料页面，您可以在这里查看和管理您的账户信息。
+                </p>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th style="width: 30%">用户名</th>
+                                <td>{{ user.username }}</td>
+                            </tr>
+                            <tr>
+                                <th>邮箱</th>
+                                <td>{{ user.email|default:"未设置" }}</td>
+                            </tr>
+                            <tr>
+                                <th>注册时间</th>
+                                <td>{{ user.date_joined|date:"Y年m月d日 H:i" }}</td>
+                            </tr>
+                            <tr>
+                                <th>最后登录时间</th>
+                                <td>{{ user.last_login|date:"Y年m月d日 H:i" }}</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="text-center">
+                            <a href="{% url 'userApp:collect' %}" class="btn btn-primary">查看我的收藏</a>
+                            <a href="{% url 'home' %}" class="btn btn-default">返回首页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
